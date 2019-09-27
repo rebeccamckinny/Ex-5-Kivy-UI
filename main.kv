@@ -1,0 +1,75 @@
+<MainScreen>:
+    name: 'main'
+    FloatLayout:
+        size_hint: None, None
+
+    DPEAButton:
+        id: motor_button
+        text: 'Motor Button'
+        size: 300, 100
+        x: root.width * 0.033
+        y: root.height * .8
+        color: 0, .7, 1, 1
+        on_press: root.motor_pressed()
+
+    Label:
+        id: motor_label
+        text: "Motor Off" if root.condition else "Motor On"
+        font_size: 40
+        x: root.width * -.275
+        y: root.height * .25
+        color: 0, .7, 1, 1
+
+    Slider:
+        id: slider
+        min: 0
+        max: 100
+        step: 1
+        size_hint: .5,.5
+        color: 0, .7, 1, 1
+        x:root.width*0.5
+        y:root.height*0.8
+        orientation: 'horizontal'
+
+    Label:
+        text: str(slider.value)
+        font_size: 40
+        size: 100,100
+        x:root.width* 0.0
+        y:root.height* 0.38
+        color: 0,-1,1,1
+
+    DPEAButton:
+        id: on_off_button
+        text: 'ON' if on_off_button.state == "normal" else "OFF"
+        size: 200, 100
+        x: root.width * 0.6
+        y: root.height * 0.5
+        color: 0, 1, 0, 1
+
+    DPEAButton:
+        id: btn
+        text: 'Counter' + root.value
+        size: 200, 100
+        x: root.width * 0.6
+        y: root.height * 0.3
+        color: 1, .87, 0, 1
+        on_press: root.counter()
+
+    DPEAButton:
+        text: "Test"
+        size: 200, 100
+        x: root.width * 0.6
+        y:root.height * 0.084
+        color: 1, .7, 0, 1
+        on_press: root.pressed()
+
+    ImageButton:
+        id: image_button
+        source: "leaving.jpg"
+        size: 250, 250
+        x: root.width * 0.063
+        y: root.height * 0.05
+        on_press: root.leaving_action()
+
+
