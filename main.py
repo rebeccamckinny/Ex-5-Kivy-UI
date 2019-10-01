@@ -6,11 +6,13 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
-from kivy.animation import Animation
-
 from pidev.MixPanel import MixPanel
 from pidev.kivy.PassCodeScreen import PassCodeScreen
 from pidev.kivy.PauseScreen import PauseScreen
+from pidev.Joystick import Joystick
+from threading import Thread
+from time import sleep
+from kivy.animation import Animation
 from kivy.uix.slider import Slider
 from pidev.kivy import DPEAButton
 from pidev.kivy import ImageButton
@@ -22,6 +24,7 @@ SCREEN_MANAGER = ScreenManager()
 MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 LEAVING_SCREEN_NAME = 'LeavingScreen'
+joystick = Joystick(0, False)
 
 
 class ProjectNameGUI(App):
@@ -46,11 +49,31 @@ class MainScreen(Screen):
     """
     value = StringProperty()
     condition = ObjectProperty()
+    joy_x_val = ObjectProperty(0, 0)
+    joy_y_val = ObjectProperty(0, 0)
 
-    def __init__ (self, **kwargs):
+    def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.clicks = 0
         self.condition = False
+
+
+    def joy_update(self):  # This should be inside the MainScreen Class
+        while True:
+
+            self.ids.joy_label.center_x = (joystick.get_axis('x'))*(self.width/2) + (self.width/2)
+            self.ids.joy_label.text = str(joystick.get_axis('x'))
+
+            self.ids.joy_label.center_y = (joystick.get_axis('y'))*(self.height/2) + (self.height/2)
+            self.ids.joy_label.text = str(joystick.get_axis('y'))
+
+            #self.ids.joy_button = str(self.joystick.get_button_state(0))
+
+            sleep(.1)
+
+
+    def start_joy_thread(self):  # This should be inside the MainScreen Class
+        Thread(target=self.joy_update).start()
 
     def counter(self):
         print("inside counter Function")
@@ -61,9 +84,8 @@ class MainScreen(Screen):
         print("inside Motor_pressed Function")
         self.condition = not self.condition
 
-
     def pressed(self):
-        """ 
+        """
         Function called on button touch event for button with id: testButton
         :return: None
         """
@@ -105,8 +127,10 @@ class AdminScreen(Screen):
 
     def __init__(self, **kwargs):
         Builder.load_file('AdminScreen.kv')
-        PassCodeScreen.set_admin_events_screen(ADMIN_SCREEN_NAME)  # Specify screen name to transition to after correct password
-        PassCodeScreen.set_transition_back_screen(MAIN_SCREEN_NAME)  # set screen name to transition to if "Back to Game is pressed"
+        PassCodeScreen.set_admin_events_screen(
+            ADMIN_SCREEN_NAME)  # Specify screen name to transition to after correct password
+        PassCodeScreen.set_transition_back_screen(
+            MAIN_SCREEN_NAME)  # set screen name to transition to if "Back to Game is pressed"
         super(AdminScreen, self).__init__(**kwargs)
 
     @staticmethod
@@ -132,6 +156,8 @@ class AdminScreen(Screen):
         :return: None
         """
         quit()
+
+
 """
 Widget additions
 """

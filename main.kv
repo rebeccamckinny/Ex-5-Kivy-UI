@@ -1,5 +1,7 @@
 <MainScreen>:
     name: 'main'
+    on_enter:root.start_joy_thread()
+
     FloatLayout:
         size_hint: None, None
 
@@ -72,4 +74,20 @@
         y: root.height * 0.05
         on_press: root.leaving_action()
 
+    Label:
+        id: joy_label
+        text: str(root.joy_x_val) + str(root.joy_y_val)
+        font_size: 30
+        x: (root.width + root.width/2)
+        y: (root.height + root.height/2)
+        size: 100,100
+        color: 0,-1,1,1
+
+    Label:
+        id: joy_button
+        text: ""
+        size: 100,100
+        color: 0,0,1,1
+        x: root.width * 0
+        y: root.height * 0.9
 

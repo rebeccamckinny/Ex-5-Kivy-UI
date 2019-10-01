@@ -1,0 +1,22 @@
+<LeavingScreen>:
+    name: 'LeavingScreen'
+    FloatLayout:
+        size_hint: None, None
+
+
+    ImageButton:
+        id: random_image
+        source: "returning.png"
+        size: 350, 150
+        x: root.width * 0.45
+        y: root.height * 0.35
+        on_press: root.return_action()
+
+
+    ImageButton:
+        id: image_button
+        source: "BigHero6.jpg"
+        size: 150, 150
+        x: root.width * .637
+        y: root.height * 0.7
+        on_press: root.animate()
