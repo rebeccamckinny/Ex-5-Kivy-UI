@@ -42,6 +42,7 @@ class ProjectNameGUI(App):
 
 Window.clearcolor = (1, 1, 1, 1)  # White
 
+
 class MainScreen(Screen):
     """
     Class to handle the main screen and its associated touch events
@@ -57,22 +58,17 @@ class MainScreen(Screen):
         self.clicks = 0
         self.condition = False
 
-
     def joy_update(self):  # This should be inside the MainScreen Class
         while True:
 
-            self.x_and_y_val = str('x= ' + str(self.joy_x_val),"y= " + str(self.joy_y_val))
+            self.ids.joy_label.center_x = (joystick.get_axis('x')) * (self.width / 2) + (self.width / 2)
+            self.ids.joy_label.center_y = (joystick.get_axis('y')) * -(self.height / 2) + (self.height / 2)
 
-            self.ids.joy_label.center_x = (joystick.get_axis('x'))*(self.width/2) + (self.width/2)
-            self.ids.joy_label.text = str(joystick.get_axis('x'))
+            self.ids.joy_label.text = " x= {:.3f} y= {:.3f}".format((joystick.get_axis('x')), ((-1)*joystick.get_axis('y')))
 
-            self.ids.joy_label.center_y = (joystick.get_axis('y'))*-(self.height/2) + (self.height/2)
-            self.ids.joy_label.text = str(joystick.get_axis('y'))
-
-            #self.ids.joy_button = str(self.joystick.get_button_state(0))
+            self.ids.joy_button.text = str(joystick.get_button_state(0))
 
             sleep(.1)
-
 
     def start_joy_thread(self):  # This should be inside the MainScreen Class
         Thread(target=self.joy_update).start()
