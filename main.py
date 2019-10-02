@@ -24,7 +24,7 @@ SCREEN_MANAGER = ScreenManager()
 MAIN_SCREEN_NAME = 'main'
 ADMIN_SCREEN_NAME = 'admin'
 LEAVING_SCREEN_NAME = 'LeavingScreen'
-joystick = Joystick(0, False)
+joystick = Joystick(0, True)
 
 
 class ProjectNameGUI(App):
@@ -64,11 +64,12 @@ class MainScreen(Screen):
             self.ids.joy_label.center_x = (joystick.get_axis('x')) * (self.width / 2) + (self.width / 2)
             self.ids.joy_label.center_y = (joystick.get_axis('y')) * -(self.height / 2) + (self.height / 2)
 
-            self.ids.joy_label.text = " x= {:.3f} y= {:.3f}".format((joystick.get_axis('x')), ((-1)*joystick.get_axis('y')))
+            self.ids.joy_label.text = " x= {:.3f}, y= {:.3f}".format((joystick.get_axis('x')), ((-1)*joystick.get_axis('y'))) + " , " + str(joystick.get_button_state(0))
 
-            self.ids.joy_button.text = str(joystick.get_button_state(0))
+            #self.ids.joy_button.text = str(joystick.get_button_state(0))
 
             sleep(.1)
+
 
     def start_joy_thread(self):  # This should be inside the MainScreen Class
         Thread(target=self.joy_update).start()

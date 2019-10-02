@@ -27,18 +27,18 @@
         min: 0
         max: 100
         step: 1
-        size_hint: .5,.5
+        size_hint: .5, .5
         color: 0, .7, 1, 1
         x:root.width*0.5
-        y:root.height*0.8
+        y:root.height*0.6
         orientation: 'horizontal'
 
     Label:
         text: str(slider.value)
         font_size: 40
         size: 100,100
-        x:root.width* 0.0
-        y:root.height* 0.38
+        x:root.width* 0.25
+        y:root.height* 0.4
         color: 0,-1,1,1
 
     DPEAButton:
@@ -86,8 +86,8 @@
     Label:
         id: joy_button
         text: "yo"
-        size: 100,100
+        font_size: 50
         color: 0,0,1,1
-        x: root.width * 0.5
-        y: root.height * 0.5
+        x: root.width * 0.0
+        y: root.height * -0.5
 
